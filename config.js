@@ -9,7 +9,7 @@ const CONFIG = {
   youtubeVideoId: "MNMSAIG0dfQ",
 
   // Total scroll duration in seconds. Increase for slower, more dramatic crawl.
-  scrollDuration: 100,
+  scrollDuration: 30,
 
   // Markdown file to load as the crawl message.
   messageFile: "MESSAGE.md",
@@ -18,7 +18,7 @@ const CONFIG = {
   crawlTitle: "Into the Frontier",
 
     // Subtitle line shown above the crawl (optional, set to "" to hide).
-  crawlSubtitle: "A New Chapter Begins",
+  crawlSubtitle: "Sage's next chapter begins",
 
   // ── Start screen ──────────────────────────────────────────────────────────
   // Set false to skip the start screen and begin the sequence automatically.
@@ -39,7 +39,12 @@ const CONFIG = {
   showTitleReveal: true,
 
   // ── End screen ────────────────────────────────────────────────────────────
-  endText: "May the Force be with you.",
+  // A single string, or an array of strings for multiple lines.
+  endText: [
+    "May the Force be with you.",
+    "May the Force be with you.",
+    "May the Force be with you."
+  ],
 
   // ── Crawl text size ───────────────────────────────────────────────────────
   // Body paragraph font size. Any valid CSS value: "1.8rem", "2vw", "24px".
