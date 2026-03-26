@@ -9,7 +9,7 @@ const CONFIG = {
   youtubeVideoId: "MNMSAIG0dfQ",
 
   // Total scroll duration in seconds. Increase for slower, more dramatic crawl.
-  scrollDuration: 100,
+  scrollDuration: 30,
 
   // The big title shown before the crawl begins.
   crawlTitle: "FAREWELL",
