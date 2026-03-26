@@ -363,6 +363,7 @@
       introLines: ['A long time ago in a galaxy far,', 'far away\u2026.'],
       showTitleReveal: true,
       endText: 'May the Force be with you.',
+      messageFile: 'MESSAGE.md',
       crawlTextSize: null,
       crawlWidth: null,
     }, typeof CONFIG !== 'undefined' ? CONFIG : {});
@@ -416,7 +417,7 @@
     // ── Load markdown ──────────────────────────────────────────────────────
     let markdownReady = false;
 
-    fetch('./FAREWELL.md')
+    fetch('./' + cfg.messageFile)
       .then(r => r.text())
       .then(md => {
         document.getElementById('crawl-content').innerHTML = marked.parse(md);

@@ -1,5 +1,5 @@
 /**
- * Farewell Page Configuration
+ * Starcrawl Configuration
  * Edit this file to customize the experience.
  */
 const CONFIG = {
@@ -10,6 +10,9 @@ const CONFIG = {
 
   // Total scroll duration in seconds. Increase for slower, more dramatic crawl.
   scrollDuration: 30,
+
+  // Markdown file to load as the crawl message.
+  messageFile: "MESSAGE.md",
 
   // The big title shown before the crawl begins.
   crawlTitle: "FAREWELL",
@@ -40,10 +43,10 @@ const CONFIG = {
   // ── Crawl text size ───────────────────────────────────────────────────────
   // Body paragraph font size. Any valid CSS value: "1.8rem", "2vw", "24px".
   // Set to null to use the responsive default (clamp 1rem–1.4rem).
-  crawlTextSize: "2rem",
+  crawlTextSize: "3rem",
 
   // ── Crawl width ───────────────────────────────────────────────────────────
   // Width of the crawl text column. Any valid CSS value: "70%", "900px".
   // Set to null to use the default (min(58%, 680px)).
-  crawlWidth: "75%",
+  crawlWidth: "80%",
 };
