@@ -6,23 +6,23 @@ const CONFIG = {
   // YouTube video ID for background music.
   // Extract from the URL: youtube.com/watch?v=THIS_PART
   // Set to null to disable music.
-  youtubeVideoId: "MNMSAIG0dfQ",
+  youtubeVideoId: "_D0ZQPqeJkk",
 
   // Total scroll duration in seconds. Increase for slower, more dramatic crawl.
-  scrollDuration: 100,
+  scrollDuration: 150,
 
   // Markdown file to load as the crawl message.
   messageFile: "MESSAGE.md",
 
   // The big title shown before the crawl begins.
-  crawlTitle: "Into the Frontier",
+  crawlTitle: "Sage 2.0",
 
-    // Subtitle line shown above the crawl (optional, set to "" to hide).
-  crawlSubtitle: "Sage's next chapter begins",
+  // Subtitle line shown above the crawl (optional, set to "" to hide).
+  crawlSubtitle: "Embarking on a new chapter",
 
   // ── Start screen ──────────────────────────────────────────────────────────
   // Set false to skip the start screen and begin the sequence automatically.
-  showStartScreen: false,
+  showStartScreen: true,
   startPromptText: "Click anywhere to begin",
 
   // ── "A long time ago..." intro ────────────────────────────────────────────
@@ -48,7 +48,7 @@ const CONFIG = {
   // ── Crawl text size ───────────────────────────────────────────────────────
   // Body paragraph font size. Any valid CSS value: "1.8rem", "2vw", "24px".
   // Set to null to use the responsive default (clamp 1rem–1.4rem).
-  crawlTextSize: "3rem",
+  crawlTextSize: "clamp(1.3rem, 2.8vw, 1.9rem)",
 
   // ── Crawl width ───────────────────────────────────────────────────────────
   // Width of the crawl text column. Any valid CSS value: "70%", "900px".
