@@ -156,18 +156,13 @@
     #crawl-content {
       width: 100%;
       text-align: justify;
-      padding-bottom: 30vh;
-      transform: translateY(5vh);
     }
 
     #crawl-content.scrolling {
       animation: crawlScroll var(--scroll-duration, 90s) linear forwards;
     }
 
-    @keyframes crawlScroll {
-      0%   { transform: translateY(5vh); }
-      100% { transform: translateY(-350vh); }
-    }
+    /* crawlScroll keyframe injected by JS from physics constants */
 
     /* Crawl typography */
     #crawl-content h1 {
@@ -366,6 +361,23 @@
       crawlWidth: null,
     }, typeof CONFIG !== 'undefined' ? CONFIG : {});
 
+    // ── Crawl physics constants ──────────────────────────────────────────
+    const CRAWL_START_VH   = 5;      // content starts just below viewport
+    const CRAWL_END_VH     = -500;   // content ends well above viewport
+    const CRAWL_TOTAL_VH   = CRAWL_START_VH - CRAWL_END_VH; // 355
+    const CRAWL_PADDING_VH = 30;     // padding-bottom buffer on crawl content
+    const END_TRIGGER_VP   = 0.5;    // trigger end when text passes this viewport fraction
+    const FADE_SCROLL_VP   = 2.0;    // extra viewport-heights to scroll during fade-out
+
+    // ── Sequence timing (ms unless noted) ────────────────────────────────
+    const FADE_MS          = 1300;   // opacity transition settle time
+    const FADE_SETTLE_MS   = 1400;   // wait after fade before next phase
+    const INTRO_MS         = 5000;   // intro text display duration
+    const TITLE_HOLD_MS    = 1200;   // title visible before zoom-out starts
+    const TITLE_ZOOM_MS    = 4800;   // title zoom-out animation duration
+    const END_FADE_S       = 3;      // crawl scene fade-out (seconds)
+    const END_DELAY_MS     = 2000;   // delay before showing end screen
+
     // Apply config to DOM
     document.title = cfg.crawlTitle;
     document.getElementById('start-title-text').textContent = cfg.crawlTitle;
@@ -388,6 +400,17 @@
     if (cfg.crawlWidth) {
       document.getElementById('crawl-wrap').style.setProperty('--crawl-width', cfg.crawlWidth);
     }
+
+    // Inject crawl geometry from constants (single source of truth)
+    document.getElementById('crawl-content').style.paddingBottom = CRAWL_PADDING_VH + 'vh';
+    document.getElementById('crawl-content').style.transform = `translateY(${CRAWL_START_VH}vh)`;
+    document.head.appendChild(Object.assign(document.createElement('style'), {
+      textContent: `
+        @keyframes crawlScroll {
+          0%   { transform: translateY(${CRAWL_START_VH}vh); }
+          100% { transform: translateY(${CRAWL_END_VH}vh); }
+        }`
+    }));
 
     // Build intro lines
     const introEl = document.getElementById('intro-text');
@@ -443,7 +466,7 @@
       const el = document.getElementById(id);
       el.classList.add('hidden');
       el.classList.remove('visible');
-      if (cb) setTimeout(cb, 1300);
+      if (cb) setTimeout(cb, FADE_MS);
     }
 
     let sequenceStarted = false;
@@ -455,7 +478,7 @@
       if (cfg.showStartScreen) {
         fadeOut('start-screen');
         startMusic();
-        await delay(1400);
+        await delay(FADE_SETTLE_MS);
       } else {
         hide('start-screen');
         startMusic();
@@ -463,18 +486,18 @@
 
       if (cfg.showIntro) {
         show('intro-text');
-        await delay(5000); // wait for the intro text to be visible
+        await delay(INTRO_MS);
         fadeOut('intro-text');
-        await delay(1400);
+        await delay(FADE_SETTLE_MS);
       }
 
       if (cfg.showTitleReveal) {
         show('title-reveal');
-        await delay(1200);
+        await delay(TITLE_HOLD_MS);
         document.getElementById('title-main').classList.add('title-zoom-out');
         document.getElementById('title-sub').style.transition = 'opacity 3s ease';
         document.getElementById('title-sub').style.opacity    = '0';
-        await delay(4800);
+        await delay(TITLE_ZOOM_MS);
         hide('title-reveal');
       }
 
@@ -486,35 +509,35 @@
       await delay(100); // allow paint
       document.getElementById('crawl-content').classList.add('scrolling');
 
-      // Trigger end screen when the last line of text passes 50% of viewport.
-      // Animation: translateY(+5vh) → translateY(-350vh) over scrollDuration.
-      // scrollHeight includes padding-bottom: 30vh, which we subtract so we
-      // track the actual end of text rather than the end of padding.
-      // => f = (0.25*vh + scrollHeight) / (3.55*vh)
+      // Trigger end screen when the last line of text passes END_TRIGGER_VP of viewport.
+      // Animation: translateY(START) → translateY(END) over scrollDuration.
+      // scrollHeight includes CRAWL_PADDING_VH, which the offset accounts for.
+      // f = ((END_TRIGGER_VP - (START - PADDING)/100) * vh + scrollH) / (TOTAL/100 * vh)
       {
         const vh = window.innerHeight;
         const scrollH = document.getElementById('crawl-content').scrollHeight;
-        const fraction = Math.min(1, (0.5 * vh + scrollH) / (3.55 * vh));
+        const offset = END_TRIGGER_VP - (CRAWL_START_VH - CRAWL_PADDING_VH) / 100;
+        const fraction = Math.min(1, (offset * vh + scrollH) / (CRAWL_TOTAL_VH / 100 * vh));
         await delay(fraction * cfg.scrollDuration * 1000);
       }
-      // Snapshot the current scroll position from the live animation
+
       const crawlContent = document.getElementById('crawl-content');
       const crawlScene   = document.getElementById('crawl-scene');
       const matrix   = new DOMMatrixReadOnly(window.getComputedStyle(crawlContent).transform);
       const currentY = matrix.m42; // px
 
-      // Cancel the fixed-duration animation and continue scrolling with a transition
+      // Continue scrolling at the same speed during fade-out
       crawlContent.style.animation = 'none';
       crawlContent.style.transform = `translateY(${currentY}px)`;
       crawlContent.getBoundingClientRect(); // force reflow
-      const continueDuration = 5; // seconds to keep scrolling during the fade
+      const continueDuration = (FADE_SCROLL_VP / (CRAWL_TOTAL_VH / 100)) * cfg.scrollDuration;
       crawlContent.style.transition = `transform ${continueDuration}s linear`;
-      crawlContent.style.transform  = `translateY(${currentY - window.innerHeight * 2.0}px)`;
+      crawlContent.style.transform  = `translateY(${currentY - window.innerHeight * FADE_SCROLL_VP}px)`;
 
-      // Fade crawl out and end screen in simultaneously
-      crawlScene.style.transition = 'opacity 3s ease';
+      // Fade crawl out and show end screen
+      crawlScene.style.transition = `opacity ${END_FADE_S}s ease`;
       crawlScene.classList.remove('visible');
-      await delay(2000);
+      await delay(END_DELAY_MS);
       show('end-screen');
     }
 

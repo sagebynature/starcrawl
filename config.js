@@ -42,8 +42,6 @@ const CONFIG = {
   // A single string, or an array of strings for multiple lines.
   endText: [
     "May the Force be with you.",
-    "May the Force be with you.",
-    "May the Force be with you."
   ],
 
   // ── Crawl text size ───────────────────────────────────────────────────────
