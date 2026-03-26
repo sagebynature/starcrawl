@@ -19,12 +19,12 @@ const CONFIG = {
 
   // ── Start screen ──────────────────────────────────────────────────────────
   // Set false to skip the start screen and begin the sequence automatically.
-  showStartScreen: true,
+  showStartScreen: false,
   startPromptText: "Click anywhere to begin",
 
   // ── "A long time ago..." intro ────────────────────────────────────────────
   // Set false to skip the blue intro text entirely.
-  showIntro: true,
+  showIntro: false,
   introLines: [
     "A long time ago in a galaxy far,",
     "far away\u2026."
@@ -32,7 +32,7 @@ const CONFIG = {
 
   // ── Title reveal ──────────────────────────────────────────────────────────
   // Set false to skip the title zoom-out and go straight to the crawl.
-  showTitleReveal: true,
+  showTitleReveal: false,
 
   // ── End screen ────────────────────────────────────────────────────────────
   endText: "May the Force be with you.",
@@ -40,5 +40,10 @@ const CONFIG = {
   // ── Crawl text size ───────────────────────────────────────────────────────
   // Body paragraph font size. Any valid CSS value: "1.8rem", "2vw", "24px".
   // Set to null to use the responsive default (clamp 1rem–1.4rem).
-  crawlTextSize: "1.8rem",
+  crawlTextSize: "2rem",
+
+  // ── Crawl width ───────────────────────────────────────────────────────────
+  // Width of the crawl text column. Any valid CSS value: "70%", "900px".
+  // Set to null to use the default (min(58%, 680px)).
+  crawlWidth: "75%",
 };
