@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Farewell</title>
+  <title></title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=News+Cycle:wght@400;700&family=Pathway+Gothic+One&display=swap" rel="stylesheet">
   <style>
@@ -269,7 +269,7 @@
 
   <!-- Start screen -->
   <div id="start-screen" class="layer visible">
-    <div class="start-title" id="start-title-text">FAREWELL</div>
+    <div class="start-title" id="start-title-text"></div>
     <div class="start-prompt" id="start-prompt-text">Click anywhere to begin</div>
   </div>
 
@@ -369,6 +369,7 @@
     }, typeof CONFIG !== 'undefined' ? CONFIG : {});
 
     // Apply config to DOM
+    document.title = cfg.crawlTitle;
     document.getElementById('start-title-text').textContent = cfg.crawlTitle;
     document.getElementById('start-prompt-text').textContent = cfg.startPromptText;
     document.getElementById('title-main').textContent        = cfg.crawlTitle;
@@ -479,18 +480,17 @@
       await delay(100); // allow paint
       document.getElementById('crawl-content').classList.add('scrolling');
 
-      // Show end screen when content bottom passes 50% of viewport
-      await new Promise(resolve => {
-        function checkPosition() {
-          const bottom = document.getElementById('crawl-content').getBoundingClientRect().bottom;
-          if (bottom <= window.innerHeight * 0.5) {
-            resolve();
-          } else {
-            requestAnimationFrame(checkPosition);
-          }
-        }
-        requestAnimationFrame(checkPosition);
-      });
+      // Trigger end screen when the last line of text passes 50% of viewport.
+      // Animation: translateY(+5vh) → translateY(-350vh) over scrollDuration.
+      // scrollHeight includes padding-bottom: 30vh, which we subtract so we
+      // track the actual end of text rather than the end of padding.
+      // => f = (0.25*vh + scrollHeight) / (3.55*vh)
+      {
+        const vh = window.innerHeight;
+        const scrollH = document.getElementById('crawl-content').scrollHeight;
+        const fraction = Math.min(1, (0.25 * vh + scrollH) / (3.55 * vh));
+        await delay(fraction * cfg.scrollDuration * 1000);
+      }
       document.getElementById('crawl-scene').style.transition = 'opacity 3s ease';
       document.getElementById('crawl-scene').classList.remove('visible');
       show('end-screen');

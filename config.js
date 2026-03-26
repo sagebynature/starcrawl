@@ -9,16 +9,16 @@ const CONFIG = {
   youtubeVideoId: "MNMSAIG0dfQ",
 
   // Total scroll duration in seconds. Increase for slower, more dramatic crawl.
-  scrollDuration: 30,
+  scrollDuration: 90,
 
   // Markdown file to load as the crawl message.
   messageFile: "MESSAGE.md",
 
   // The big title shown before the crawl begins.
-  crawlTitle: "FAREWELL",
+  crawlTitle: "Title Goes Here",
 
   // Subtitle line shown above the crawl (optional, set to "" to hide).
-  crawlSubtitle: "Episode I",
+  crawlSubtitle: "Subtitle Goes Here",
 
   // ── Start screen ──────────────────────────────────────────────────────────
   // Set false to skip the start screen and begin the sequence automatically.
@@ -29,8 +29,9 @@ const CONFIG = {
   // Set false to skip the blue intro text entirely.
   showIntro: true,
   introLines: [
-    "A long time ago in a galaxy far,",
-    "far away\u2026."
+    "\"You can never cross the ocean",
+    "until you have the courage to lose sight of the shore.\"",
+    "- Christopher Columbus"
   ],
 
   // ── Title reveal ──────────────────────────────────────────────────────────
@@ -48,5 +49,5 @@ const CONFIG = {
   // ── Crawl width ───────────────────────────────────────────────────────────
   // Width of the crawl text column. Any valid CSS value: "70%", "900px".
   // Set to null to use the default (min(58%, 680px)).
-  crawlWidth: "80%",
+  crawlWidth: "75%",
 };
