@@ -9,7 +9,7 @@ const CONFIG = {
   youtubeVideoId: "MNMSAIG0dfQ",
 
   // Total scroll duration in seconds. Increase for slower, more dramatic crawl.
-  scrollDuration: 30,
+  scrollDuration: 100,
 
   // Markdown file to load as the crawl message.
   messageFile: "MESSAGE.md",
@@ -29,8 +29,7 @@ const CONFIG = {
   // Set false to skip the blue intro text entirely.
   showIntro: true,
   introLines: [
-    "\"You can never cross the ocean",
-    "until you have the courage to lose sight of the shore.\"",
+    "\"You can never cross the ocean until you have the courage to lose sight of the shore.\"",
     "- Christopher Columbus"
   ],
 
@@ -41,7 +40,9 @@ const CONFIG = {
   // ── End screen ────────────────────────────────────────────────────────────
   // A single string, or an array of strings for multiple lines.
   endText: [
-    "May the Force be with you.",
+    "sage.choi@gmail.com",
+    "https://www.linkedin.com/in/sage-choi/",
+    "https://sagebynature.substack.com/"
   ],
 
   // ── Crawl text size ───────────────────────────────────────────────────────
