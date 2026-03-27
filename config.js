@@ -6,31 +6,31 @@ const CONFIG = {
   // YouTube video ID for background music.
   // Extract from the URL: youtube.com/watch?v=THIS_PART
   // Set to null to disable music.
-  youtubeVideoId: "_D0ZQPqeJkk",
+  youtubeVideoId: null,
 
   // Total scroll duration in seconds. Increase for slower, more dramatic crawl.
-  scrollDuration: 140,
+  scrollDuration: 115,
 
   // Markdown file to load as the crawl message.
   messageFile: "MESSAGE.md",
 
   // The big title shown before the crawl begins.
-  crawlTitle: "Sage 2.0",
+  crawlTitle: "Starcrawl",
 
   // Subtitle line shown above the crawl (optional, set to "" to hide).
-  crawlSubtitle: "Embarking on a new chapter",
+  crawlSubtitle: "A cinematic repo showcase",
 
   // ── Start screen ──────────────────────────────────────────────────────────
   // Set false to skip the start screen and begin the sequence automatically.
   showStartScreen: true,
-  startPromptText: "Click anywhere to begin",
+  startPromptText: "Click to start the demo",
 
   // ── "A long time ago..." intro ────────────────────────────────────────────
   // Set false to skip the blue intro text entirely.
   showIntro: true,
   introLines: [
-    "\"You can never cross the ocean until you have the courage to lose sight of the shore.\"",
-    "- Christopher Columbus"
+    "A simple markdown file.",
+    "A much bigger entrance."
   ],
 
   // ── Title reveal ──────────────────────────────────────────────────────────
@@ -40,9 +40,9 @@ const CONFIG = {
   // ── End screen ────────────────────────────────────────────────────────────
   // A single string, or an array of strings for multiple lines.
   endText: [
-    "sage.choi@gmail.com",
-    "https://www.linkedin.com/in/sage-choi",
-    "https://sagebynature.substack.com"
+    "Edit the message.",
+    "Tune the config.",
+    "Publish your own crawl."
   ],
 
   // ── Crawl text size ───────────────────────────────────────────────────────
@@ -62,7 +62,7 @@ const CONFIG = {
   crawlFadeDistanceViewportHeights: 2,
   crawlPerspective: 400,
   crawlPerspectiveOrigin: "50% 90%",
-  crawlTiltDegrees: 15,
+  crawlTiltDegrees: 18,
 
   // ── Sequence timing ───────────────────────────────────────────────────────
   fadeMs: 1300,
@@ -70,7 +70,7 @@ const CONFIG = {
   introDurationMs: 5000,
   titleHoldMs: 1200,
   titleZoomMs: 4800,
-  endFadeDurationSeconds: 5,
+  endFadeDurationSeconds: 4,
   // Set to null to show the end screen after the fade completes.
   endScreenDelayMs: null,
 };
